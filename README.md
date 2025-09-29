@@ -22,8 +22,8 @@ Comportamentos
 - Editar tarefa
 - Remover tarefa
 
-### Método: add_tasks:
-    
+### Método: add_tasks
+
     Descrição:
         Adiciona uma nova instância do objeto tarefa à lista.
 
@@ -41,4 +41,4 @@ Comportamentos
         1. Recebe a lista de tarefas via parametros
         2. Mostra as tarefas utilizando um loop
 
-Desenvolver funções base inicialmente na *main*.
+funções base serão inicialmente desenvolvidas na *main*.
