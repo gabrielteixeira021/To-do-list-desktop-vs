@@ -23,8 +23,8 @@ def show_all_tasks(t_list: list):
     Args:
         tl (list): A list of tasks
     """
-    for x in range(len(t_list)):
-        tf.get_task_info(t_list[x])
+    for t in t_list:
+        tf.get_task_info(t)
 
 def create_new_task() -> tf:
     """Create and return a new Task instance    
@@ -36,7 +36,7 @@ def create_new_task() -> tf:
     description = input("Insira uma descrição: ")        
     task_id = id_cont
     id_cont += 1
-    return tf(task_id, title, description, status)
+    return tf(task_id, title, description)
 
 def remove_task(t_list: list, task_idx: int):
     """Remove uma tarefa da lista de tarefas
@@ -49,7 +49,33 @@ def remove_task(t_list: list, task_idx: int):
     if id_table[task_idx + 1]:
         id_table[task_idx] = id_table[task_idx + 1]
     
+def update_status(t_list: list):
+    """Muda o status da tarefa -> Incompleto para completo e vice-versa
 
+    Args:
+        t_list (list): Lista de tarefas
+    """
+    if current_idx := id_table[int(input("Insira o id da tarefa a ser marcada concluida: "))]:
+        print("Tarefa encontrada")
+        tf.change_status(t_list[current_idx])
+    else:
+        print("Err0: Índice inválido")
+
+def update_task(t_list: list, task_idx: int):
+    
+    # Obtem id
+    if current_idx := id_table[task_idx]:
+        print("Tarefa encontrada")
+        alt_task = t_list[current_idx]
+        
+        print("Tarefa escolhida: ")
+        tf.get_task_info(alt_task)
+        
+        tf.set_title(alt_task, input("Insira um novo titulo: "))
+        tf.set_description(alt_task, input("Insira uma nova descrição: "))        
+    else:
+        print("Err0: Tarefa não encontrada, insira um índice válido")
+    
 
 def add_new_task(t_list: list, title:str, description:str):
     """Adiciona uma nova tarefa à lista
@@ -60,7 +86,7 @@ def add_new_task(t_list: list, title:str, description:str):
         description (str): task's description        
     """
     global id_cont
-    new_task = tf(id_cont, title, description, status=False)
+    new_task = tf(id_cont, title, description)
     id_cont += 1
     id_table.append(id_cont)
     t_list.append(new_task)
@@ -79,16 +105,23 @@ def main():
     """Main function
     """
     
-    task1 = tf(0, "Estudar", "1 hora por dia pelo menos", False)       # id_table[0] = 0
-    task2 = tf(1, "Praticar culinária", "Aprender e praticar culinária. Importante para morar sozinho", False)    # id_table[1] = 1
-    task3 = tf(2, "Tirar Cochilo", "Cochilar por 10 min", False)        # id_table[2] = 2
+    #task1 = tf(0, "Estudar", "1 hora por dia pelo menos")       # id_table[0] = 0
+    #task2 = tf(1, "Praticar culinária", "Aprender e praticar culinária. Importante para morar sozinho")    # id_table[1] = 1
+    #task3 = tf(2, "Tirar Cochilo", "Cochilar por 10 min")        # id_table[2] = 2
+    
+    add_new_task(tasks_list, "Estudar", "1 hora por dia")
+    add_new_task(tasks_list, "academia", "treinar")
+    add_new_task(tasks_list, "jogar", "1 hora por dia")
     
     #print("### Testando função de adicionar tarefas")
     #test_add_new_task(tasks_list, create_new_task())
     #show_all_tasks(tasks_list)
     
     #test_add_new_task(tasks_list, create_new_task())
-    #show_all_tasks(tasks_list)
+    
+    update_task(tasks_list, 1)
+    show_all_tasks(tasks_list)
+    
     
 if __name__ == "__main__":
     main()
