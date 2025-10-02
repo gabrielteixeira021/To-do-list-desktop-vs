@@ -23,7 +23,7 @@ Comportamentos do sistema
 - Editar tarefa
 - Remover tarefa
 
-### Método: add_tasks
+### Método: add_task
 
     Descrição:
         Adiciona uma nova instância do objeto tarefa à lista.
