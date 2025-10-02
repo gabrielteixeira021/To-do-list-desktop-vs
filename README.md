@@ -8,14 +8,14 @@
 
 Atributos
 
-- id (imutavel): int 
+- id (imutavel): int
 - Titulo: string
-- Descrição: string 
+- Descrição: string
 
 Objeto/Variavel
 lista_de_tarefas: serve para armazenar as tarefas(instâncias do obj tarefa) do usuario. Toda operação vai chamar e consultar essa lista.
 
-Comportamentos
+Comportamentos do sistema
 
 - Adicionar tarefa
 - Listar tarefa
@@ -40,5 +40,20 @@ Comportamentos
     Algoritmo:
         1. Recebe a lista de tarefas via parametros
         2. Mostra as tarefas utilizando um loop
+    
+### Método: remove_task
+
+    Descrição: 
+        Remove uma tarefa da lista 
+
+    Algoritmo: 
+        1. User entra com o id
+        2. utiliza um metodo para remover da lista
+        3. Atualizar o dicionário de índices
+
+### Método: update_task
+
+    Descrição: 
+        
 
 funções base serão inicialmente desenvolvidas na *main*.

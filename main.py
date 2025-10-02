@@ -1,9 +1,9 @@
 from model import Task as tf # tf de tarefa
 
 # Variáveis globais
-id_cont = 0;
+id_cont = 0
 tasks_list = []
-
+id_table = []
 
 def show_task(t_list: list, idx: int):
     """Show an individual task inside the list
@@ -31,11 +31,25 @@ def create_new_task() -> tf:
     """
     
     global id_cont
+    status = False
     title = input("Insira um título para a tarefa: ")
-    description = input("Insira uma descrição: ")
+    description = input("Insira uma descrição: ")        
     task_id = id_cont
     id_cont += 1
-    return tf(task_id, title, description)
+    return tf(task_id, title, description, status)
+
+def remove_task(t_list: list, task_idx: int):
+    """Remove uma tarefa da lista de tarefas
+
+    Args:
+        t_list (list): Lista de tarefas
+        task_id (int): indice da lista que contem a tarefa
+    """  
+    t_list.remove(id_table[task_idx])
+    if id_table[task_idx + 1]:
+        id_table[task_idx] = id_table[task_idx + 1]
+    
+
 
 def add_new_task(t_list: list, title:str, description:str):
     """Adiciona uma nova tarefa à lista
@@ -46,8 +60,9 @@ def add_new_task(t_list: list, title:str, description:str):
         description (str): task's description        
     """
     global id_cont
-    new_task = tf(id_cont, title, description)
-    id_cont += 1 
+    new_task = tf(id_cont, title, description, status=False)
+    id_cont += 1
+    id_table.append(id_cont)
     t_list.append(new_task)
     
 def test_add_new_task(t_list: list, ts_obj: tf):
@@ -64,16 +79,16 @@ def main():
     """Main function
     """
     
-    #task1 = tf(1, "Estudar", "1 hora por dia pelo menos")
-    #task2 = tf(2, "Praticar culinária", "Aprender e praticar culinária. Importante para morar sozinho")
-    #task3 = tf(3, "Tirar Cochilo", "Cochilar por 10 min")        
+    task1 = tf(0, "Estudar", "1 hora por dia pelo menos", False)       # id_table[0] = 0
+    task2 = tf(1, "Praticar culinária", "Aprender e praticar culinária. Importante para morar sozinho", False)    # id_table[1] = 1
+    task3 = tf(2, "Tirar Cochilo", "Cochilar por 10 min", False)        # id_table[2] = 2
     
-    print("### Testando função de adicionar tarefas")
-    test_add_new_task(tasks_list, create_new_task())
-    show_all_tasks(tasks_list)
-        
-    test_add_new_task(tasks_list, create_new_task())
-    show_all_tasks(tasks_list)
+    #print("### Testando função de adicionar tarefas")
+    #test_add_new_task(tasks_list, create_new_task())
+    #show_all_tasks(tasks_list)
+    
+    #test_add_new_task(tasks_list, create_new_task())
+    #show_all_tasks(tasks_list)
     
 if __name__ == "__main__":
     main()
