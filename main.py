@@ -83,14 +83,10 @@ def main():  # sourcery skip: extract-duplicate-method
     """Main function
     """
     
-    #task1 = tf(0, "Estudar", "1 hora por dia pelo menos")       # id_table[0] = 0
-    #task2 = tf(1, "Praticar culinária", "Aprender e praticar culinária. Importante para morar sozinho")    # id_table[1] = 1
-    #task3 = tf(2, "Tirar Cochilo", "Cochilar por 10 min")        # id_table[2] = 2
-    
-    add_task(tasks_list, "Estudar", "1 hora por dia")   # id_table[0] = 0
-    add_task(tasks_list, "academia", "treinar")         # id_table[1] = 1  #se remover esse: id_table[1] = 2 
-    add_task(tasks_list, "jogar", "1 hora por dia")     # id_table[2] = 2
-    add_task(tasks_list, "escutar musica", "No max 1 hora")     # id_table[3] = 3
+    add_task(tasks_list, "Estudar", "1 hora por dia")   
+    add_task(tasks_list, "academia", "treinar")         
+    add_task(tasks_list, "jogar", "1 hora por dia")     
+    add_task(tasks_list, "escutar musica", "No max 1 hora")    
     
     print("...............")    
     show_all_tasks(tasks_list)   
