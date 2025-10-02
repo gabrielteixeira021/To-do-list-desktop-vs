@@ -3,7 +3,6 @@ from model import Task as tf # tf de tarefa
 # Variáveis globais
 id_cont = 0
 tasks_list = []
-id_table = []
 
 def show_task(t_list: list, idx: int):
     """Show an individual task inside the list
@@ -11,10 +10,11 @@ def show_task(t_list: list, idx: int):
     Args:
         t_list (list): task list
         idx (int): task index inside the list
-    """
-    if 0 <= idx < len(t_list):
+    """    
+    
+    if 0 <= idx <= len(t_list):
         tf.get_task_info(t_list[idx])
-    else: 
+    else:
         print("Index out of Bounds")
             
 def show_all_tasks(t_list: list):
@@ -26,58 +26,47 @@ def show_all_tasks(t_list: list):
     for t in t_list:
         tf.get_task_info(t)
 
-def create_new_task() -> tf:
-    """Create and return a new Task instance    
-    """
-    
-    global id_cont
-    status = False
-    title = input("Insira um título para a tarefa: ")
-    description = input("Insira uma descrição: ")        
-    task_id = id_cont
-    id_cont += 1
-    return tf(task_id, title, description)
-
-def remove_task(t_list: list, task_idx: int):
+def remove_task(t_list: list, idx: int):
     """Remove uma tarefa da lista de tarefas
 
     Args:
         t_list (list): Lista de tarefas
         task_id (int): indice da lista que contem a tarefa
     """  
-    t_list.remove(id_table[task_idx])
-    if id_table[task_idx + 1]:
-        id_table[task_idx] = id_table[task_idx + 1]
     
-def update_status(t_list: list):
+    if 0 <= idx <= len(t_list):
+        t_list.pop(idx)      
+    else: 
+        print(f"Indice inválido para remoção: {idx}")          
+
+def update_status(t_list: list, idx: int):
     """Muda o status da tarefa -> Incompleto para completo e vice-versa
 
     Args:
         t_list (list): Lista de tarefas
     """
-    if current_idx := id_table[int(input("Insira o id da tarefa a ser marcada concluida: "))]:
+    if 0 <= idx <= len(t_list):
         print("Tarefa encontrada")
-        tf.change_status(t_list[current_idx])
+        tf.change_status(t_list[idx])
     else:
         print("Err0: Índice inválido")
 
-def update_task(t_list: list, task_idx: int):
+def update_task(t_list: list, idx: int):
     
     # Obtem id
-    if current_idx := id_table[task_idx]:
-        print("Tarefa encontrada")
-        alt_task = t_list[current_idx]
+    if 0 <= idx <= len(t_list):
+        task = t_list[idx]
         
         print("Tarefa escolhida: ")
-        tf.get_task_info(alt_task)
+        tf.get_task_info(task)        
+        tf.set_title(task, input("Insira um novo titulo: "))
+        tf.set_description(task, input("Insira uma nova descrição: "))
         
-        tf.set_title(alt_task, input("Insira um novo titulo: "))
-        tf.set_description(alt_task, input("Insira uma nova descrição: "))        
     else:
         print("Err0: Tarefa não encontrada, insira um índice válido")
     
 
-def add_new_task(t_list: list, title:str, description:str):
+def add_task(t_list: list, title:str, description:str):
     """Adiciona uma nova tarefa à lista
     
     Args:
@@ -88,20 +77,9 @@ def add_new_task(t_list: list, title:str, description:str):
     global id_cont
     new_task = tf(id_cont, title, description)
     id_cont += 1
-    id_table.append(id_cont)
     t_list.append(new_task)
     
-def test_add_new_task(t_list: list, ts_obj: tf):
-    """Adiciona uma nova tarefa à lista
-    
-    Args:
-        t_list (list): task's list
-        title (str): task's title
-        description (str): task's description        
-    """
-    t_list.append(ts_obj)
-
-def main():
+def main():  # sourcery skip: extract-duplicate-method
     """Main function
     """
     
@@ -109,17 +87,23 @@ def main():
     #task2 = tf(1, "Praticar culinária", "Aprender e praticar culinária. Importante para morar sozinho")    # id_table[1] = 1
     #task3 = tf(2, "Tirar Cochilo", "Cochilar por 10 min")        # id_table[2] = 2
     
-    add_new_task(tasks_list, "Estudar", "1 hora por dia")
-    add_new_task(tasks_list, "academia", "treinar")
-    add_new_task(tasks_list, "jogar", "1 hora por dia")
+    add_task(tasks_list, "Estudar", "1 hora por dia")   # id_table[0] = 0
+    add_task(tasks_list, "academia", "treinar")         # id_table[1] = 1  #se remover esse: id_table[1] = 2 
+    add_task(tasks_list, "jogar", "1 hora por dia")     # id_table[2] = 2
+    add_task(tasks_list, "escutar musica", "No max 1 hora")     # id_table[3] = 3
     
-    #print("### Testando função de adicionar tarefas")
-    #test_add_new_task(tasks_list, create_new_task())
-    #show_all_tasks(tasks_list)
+    print("...............")    
+    show_all_tasks(tasks_list)   
     
-    #test_add_new_task(tasks_list, create_new_task())
+    print("...............Buscar tarefa 1 antes de remove-la")
+    show_task(tasks_list, 1)
     
-    update_task(tasks_list, 1)
+    remove_task(tasks_list, 1)
+    
+    print("...............Buscar tarefa 1 depois de remover-la")
+    show_task(tasks_list, 1)
+    
+    print("............Exibir tudo")
     show_all_tasks(tasks_list)
     
     
